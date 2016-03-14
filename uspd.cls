@@ -21,22 +21,39 @@
     {\ClassError{uspd}{Option `titlepage' not supported}{}}
 \PassOptionsToClass{onecolumn}{extarticle}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
-\ProcessOptions
+
+% Info part
+\newif\ifuspd@withinfo\uspd@withinfotrue
+\DeclareOption{noinfopart}{\uspd@withinfofalse}
+
+\ProcessOptions\relax
 \LoadClass[a4paper,onecolumn]{extarticle}
 
 \RequirePackage{rotating}
-\RequirePackage{ifthen}
 \RequirePackage{xcolor}
 \RequirePackage{polyglossia}
 \setdefaultlanguage{russian}
 \RequirePackage[top=25mm,right=10mm,bottom=15mm,left=20mm]{geometry}
 \RequirePackage{pgfkeys}
+\RequirePackage{setspace}
+\RequirePackage{textcase}
+\RequirePackage[titles]{tocloft}
+\RequirePackage{caption}
+\RequirePackage{array}
+\RequirePackage{longtable}
+\RequirePackage{paralist}
 
 \setlength{\unitlength}{1mm}
+%\linespread{1.25}
+\onehalfspacing
+
+\setlength{\parindent}{12.5mm}
+
+\newcommand{\No}{\textnumero{}}
 
 \def\ps@uspdluheadings{
-  \def\@oddfoot{\\{Литера <<О>>}} % ГОСТ 2.103-68
-  \def\@evenfoot{\\{Литера <<О>>}}
+  \def\@oddfoot{\\{}}%Литера <<О>>}} % ГОСТ 2.103-68
+  \def\@evenfoot{\\{}}%Литера <<О>>}}
   \let\@oddhead\@empty\let\@evenhead\@empty
   \let\@mkboth\@gobbletwo
   \let\sectionmark\@gobble
@@ -58,6 +75,76 @@
   \let\subsectionmark\@gobble
 }
 
+\setcaptionmargin{\parindent}
+\setcounter{tocdepth}{2}
+
+% \renewcommand{\point}{\par\refstepcounter{subsubsection}\thesubsubsection\quad}
+% 
+% \newcounter{niidarSubpoint}[subsubsection]
+% \renewcommand{\subpoint}{\par\refstepcounter{niidarSubpoint}\thesubpoint\quad}
+% 
+% \renewcommand{\thepoint}{\thesubsection.\arabic{subsubsection}}
+% \renewcommand{\thesubpoint}{\thepoint.\arabic{niidarSubpoint}}
+% 
+% \newcommand{\overpoint}{{\par\refstepcounter{subsection}\thesubsection\quad}}
+% \newcommand{\overoverpoint}{{\par\refstepcounter{section}\thesection\quad}}
+
+\newcommand{\uspd@sect@alignleft}{%
+  \let\\\@centercr\@rightskip\@flushglue \rightskip\@rightskip%
+  \leftskip\z@skip}
+\newcommand{\uspd@sect@aligncenter}{%
+  \let\\\@centercr
+  \rightskip\@flushglue\leftskip\@flushglue
+  \parindent\z@\parfillskip\z@skip}
+
+\newcommand{\uspd@sect@style}{\normalfont\MakeUppercase}
+\newcommand{\uspd@subsect@style}{\normalfont}
+\newcommand{\uspd@subsubsect@style}{\normalfont\normalsize}
+
+\renewcommand\section{\@startsection {section}{1}{\parindent}%
+                                   {12pt}%
+                                   {12pt}%
+                                   {\uspd@sect@aligncenter\uspd@sect@style}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\parindent}%
+                                     {12pt}%
+                                     {12pt}%
+                                    {\uspd@sect@alignleft\uspd@subsect@style}}
+% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\parindent}%
+%                                      {0pt}%
+%                                      {0pt}%
+%                                      {\uspd@sect@alignleft\uspd@subsubsect@style}}
+
+% \renewcommand{\thesection}{\arabic{section}}
+% \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+% \renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+\righthyphenmin=2
+\sloppy
+
+\setlength{\topsep}{0pt}
+\renewcommand{\itemize}{\asparaitem}
+\renewcommand{\enumerate}{\asparaenum}
+
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\renewcommand{\cftsubsecindent}{\cftsecindent}
+\newlength{\onenumwidth}
+\settowidth{\onenumwidth}{.1}
+\addtolength{\cftsecnumwidth}{\onenumwidth}
+\addtolength{\cftsubsecnumwidth}{\onenumwidth}
+
+%\renewcommand{\cftsecnumwidth}{}
+\renewcommand{\cftdotsep}{\cftnodots}
+\renewcommand{\cftbeforesecskip}{\cftbeforesubsecskip}
+% \renewcommand{\cfttoctitlefont}{\hfil\bfseries\MakeTextUppercase}
+% \renewcommand{\cftaftertoctitle}{\hfill}
+
+% font definitions
+\newcommand{\fontShape}{\normalfont}
+\newcommand{\smallFontSize}{\fontsize{10pt}{12pt}}
+\newcommand{\smallFont}{%
+  \smallFontSize\selectfont\fontShape}
+
 \newcommand\stamp[1]{{
 \newpage
 \noindent\begin{picture}(0,0)(0,0)
@@ -67,11 +154,11 @@
 \put(-12,-167){\line(1,0){12}}
 \put(-12,-192){\line(1,0){12}}
 \put(-12,-227){\line(1,0){12}}
-\put(-11,-251){\begin{sideways}\parbox[t]{25mm}{\small Инв. {\No} подп.}\end{sideways}}
-\put(-11,-226){\begin{sideways}\parbox[t]{35mm}{\small Подп. и дата}\end{sideways}}
-\put(-11,-191){\begin{sideways}\parbox[t]{25mm}{\small Взам инв. {\No}}\end{sideways}}
-\put(-11,-166){\begin{sideways}\parbox[t]{25mm}{\small Инв. {\No} дубл.}\end{sideways}}
-\put(-11,-141){\begin{sideways}\parbox[t]{35mm}{\small Подп. и дата}\end{sideways}}
+\put(-11,-251){\begin{sideways}\parbox[t]{25mm}{\smallFont Инв. {\No}подп.}\end{sideways}}
+\put(-11,-226){\begin{sideways}\parbox[t]{35mm}{\smallFont Подп. и дата}\end{sideways}}
+\put(-11,-191){\begin{sideways}\parbox[t]{25mm}{\smallFont Взам инв. {\No}}\end{sideways}}
+\put(-11,-166){\begin{sideways}\parbox[t]{25mm}{\smallFont Инв. {\No} дубл.}\end{sideways}}
+\put(-11,-141){\begin{sideways}\parbox[t]{35mm}{\smallFont Подп. и дата}\end{sideways}}
 \end{picture}
 #1
 \newpage
@@ -81,7 +168,7 @@
 \newcommand\datefield{<<\underline{\phantom{Ж}}>>~\underline{\phantom{ЖЖЖЖЖ}}~{\number\year}~г.}
 \newcommand\signeefield[3]{#1\newline\signfield{#2}\newline\datefield\newline\newline}
 \newcommand\pagesfield[1]{\ifthenelse{\pageref{#1} > 1}{Листов \pageref{#1}}{}}
-
+\renewcommand{\labelitemi}{--}
 \newcommand\LU[1]{\markboth{{#1}--ЛУ}{{#1}--ЛУ}\setcounter{page}{1}
 \thispagestyle{uspdnormheadings}\stamp{
 % field 0, label
@@ -90,7 +177,7 @@
 \begin{center}
 
 % field 1, organization
-%{Московский Государственный Университет имени М. В. Ломоносова}
+%{ОАО <<НПК <<НИИДАР>>}
 
 % field 2, names and signatures
 \begin{tabular}{p{70mm}cp{70mm}}
@@ -105,7 +192,7 @@
 \agreeingsT{} & & \approversT{} \\
 \end{tabular}
 
-\vskip 20mm
+\vskip 15mm
 
 % field 3, program name, allcaps
 
@@ -113,11 +200,11 @@
 \@title
 %\makeatother
 
-\vskip 7mm
+%\vskip 5mm
 
-{\large ЛИСТ УТВЕРЖДЕНИЯ}
+{ЛИСТ УТВЕРЖДЕНИЯ}
 
-\vskip 10mm
+%\vskip 5mm
 
 % field 4, document id, storage type
 
@@ -128,7 +215,7 @@
 % field 5, number of sheets (only if > 1)
 \pagesfield{endlu}
 
-\vskip 10mm
+\vskip 20mm
 
 % field 6,
 \begin{tabular}{p{70mm}cp{70mm}}
@@ -150,11 +237,11 @@
 
 {{#1}--ЛУ}
 
-\vskip 10mm
+\vskip 20mm
 
 % field 1, organization
 %\begin{center}
-%{Московский Государственный Университет имени М. В. Ломоносова}
+%{ОАО <<НПК <<НИИДАР>>}
 %\end{center}
 
 % field 2, names and signatures
@@ -170,7 +257,7 @@
 
 \end{center}
 
-\vskip 20mm
+%\vskip 20mm
 
 % field 4, document id, storage type
 \begin{center}
@@ -192,45 +279,7 @@
 \end{center}
 }}
 }}
-
-\newcommand\uspd@LI{{
-\newpage
-\noindent\begin{picture}(185,247)(0,0)
-\put(0,0){\line(0,1){247}}
-\put(8,0){\line(0,1){232}}
-\put(28,0){\line(0,1){232}}
-\put(48,0){\line(0,1){232}}
-\put(68,0){\line(0,1){232}}
-\put(88,0){\line(0,1){237}}
-\put(108,0){\line(0,1){237}}
-\put(133,0){\line(0,1){237}}
-\put(158,0){\line(0,1){237}}
-\put(173,0){\line(0,1){237}}
-\put(185,0){\line(0,1){247}}
-\put(0,247){\line(1,0){185}}
-\put(0,237){\line(1,0){185}}
-\put(0,232){\line(1,0){88}}
-\put(0,212){\line(1,0){185}}
-\put(0,0){\line(1,0){185}}
-\multiput(0,207)(0,-5){41}{\line(1,0){185}}
-\put(0,237){\makebox[185mm][c]{\raisebox{2\depth}{\Large Лист регистрации изменений}}}
-\put(0,232){\makebox[88mm][c]{\raisebox{1.5\depth}{\small Номера листов (страниц)}}}
-\put(0.5,227){\parbox[t]{7mm}{\small Изм}}
-\put(9,227){\parbox[t]{18mm}{\small из\-ме\-нён\-ных}}
-\put(29,227){\parbox[t]{18mm}{\small за\-ме\-нён\-ных}}
-\put(49,227){\parbox[t]{18mm}{\small но\-вых}}
-\put(69,227){\parbox[t]{18mm}{\small ан\-ну\-ли\-ро\-ван\-ных}}
-\put(89,232){\parbox[t]{18mm}{\small Всего листов (страниц) в докум}}
-\put(109,232){\parbox[t]{23mm}{\small {\No} документа}}
-\put(134,232){\parbox[t]{23mm}{\small Входящий {\No} сопроводительного докум и дата}}
-\put(159,232){\parbox[t]{13mm}{\small Подп}}
-\put(174,232){\parbox[t]{10mm}{\small Дата}}
-\label{enddoc}
-\end{picture}
-\newpage
-}}
-
-
+  
 \pgfkeys{
   /uspd/.cd,
   designation/.store in =\designation,
@@ -243,18 +292,139 @@
   approversT,approversB
 }
 
-
 \newcommand{\uspdset}[1][]{
   \pgfkeys{/uspd/.cd,#1}
 }
 
-\AtBeginDocument{
+\newcommand{\columnOne}{.06\textwidth}
+\newcommand{\columnTwo}{.06\textwidth}
+\newcommand{\columnThree}{.06\textwidth}
+\newcommand{\columnFour}{.06\textwidth}
+\newcommand{\columnFive}{.08\textwidth}
+\newcommand{\columnSix}{.10\textwidth}
+\newcommand{\columnSeven}{.10\textwidth}
+\newcommand{\columnEight}{.12\textwidth}
+\newcommand{\columnNine}{.07\textwidth}
+\newcommand{\columnTen}{.07\textwidth}
+
+\newenvironment{changesheet}{%
+\clearpage
+\setlength{\tabcolsep}{0.5mm}
+\newcolumntype{s}{>{\smallFont}c}
+\newcolumntype{S}{>{\smallFont}c}
+\noindent
+\begin{longtable}{|*{10}{s|}}
+\hline
+\multicolumn{10}{|S|}{Лист регистрации изменений}\\\hline
+&\multicolumn{4}{S|}{Номера листов (страниц)}&&&&&\\\cline{2-5}
+\parbox[c]{\columnOne\tabcolsep-1.5\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Изм}}&
+\parbox[c]{\columnTwo\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{из\-ме\-нён\-ных}}&
+\parbox[c]{\columnThree\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{за\-ме\-нён\-ных}}&
+\parbox[c]{\columnFour\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{но\-вых}}&
+\parbox[c]{\columnFive\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{ан\-ну\-ли\-ро\-ван\-ных}}&
+\parbox[c]{\columnSix\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Всего листов (страниц) в докум}}&
+\parbox[c]{\columnSeven\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{{\No} документа}}&
+\parbox[c]{\columnEight\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Входящий {\No} сопроводительного докум и дата}\vspace{1mm}}&
+\parbox[c]{\columnNine\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Подп}}&
+\parbox[c]{\columnTen\tabcolsep-1.5\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Дата}}\\\hline
+\endfirsthead
+\hline
+&\multicolumn{4}{S|}{Номера листов (страниц)}&&&&&\\\cline{2-5}
+\parbox[c]{\columnOne-2\tabcolsep-1.5\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Изм}}&
+\parbox[c]{\columnTwo-2\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{из\-ме\-нён\-ных}}&
+\parbox[c]{\columnThree-2\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{за\-ме\-нён\-ных}}&
+\parbox[c]{\columnFour-2\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{но\-вых}}&
+\parbox[c]{\columnFive-2\tabcolsep-\arrayrulewidth}{%
+  \centering\smallFont{ан\-ну\-ли\-ро\-ван\-ных}}&
+\parbox[c]{\columnSix-2\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Всего листов (страниц) в докум}}&
+\parbox[c]{\columnSeven-2\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{{\No} документа}}&
+\parbox[c]{\columnEight-2\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Входящий {\No} сопроводительного докум и дата}\vspace{1mm}}&
+\parbox[c]{\columnNine-2\tabcolsep-\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Подп}}&
+\parbox[c]{\columnTen-2\tabcolsep-1.5\arrayrulewidth}{%
+  \vspace{-\baselineskip}\centering\smallFont{Дата}}\\\hline
+\endhead
+\hline
+\endfoot}{\end{longtable}}
+
+\renewcommand\tableofcontents{%
+  \begingroup
+  \uspd@sect@aligncenter
+  \section*{\contentsname
+    \@mkboth{%
+      \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+  \endgroup
+  \@starttoc{toc}}
+
+\newcommand{\uspd@annotation}{
+  \begingroup
+  \uspd@sect@aligncenter
+  \section*{Aннотация
+    \@mkboth{%
+      \MakeTextUppercase{Аннотация}}{\MakeTextUppercase{Аннотация}}}%
+  \endgroup
+  \abstract{}\newpage}
+
+\newcommand\uspd@content{
   \sloppy
   \LU{\designation{}}
   \TP{\designation{}}
   \pagestyle{uspdnormheadings}
-  \section*{Аннотация}\abstract{}\newpage
-  \tableofcontents\newpage
+  \ifuspd@withinfo
+  \uspd@annotation
+  \tableofcontents
+  \fi
 }
 
-\AtEndDocument{\uspd@LI}
+\newcommand\uspd@changesheet{
+  \begin{changesheet}
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  &&&&&&&&&\\\hline
+  \end{changesheet}
+  }
+
+\AtBeginDocument{\uspd@content}
+\AtEndDocument{\uspd@changesheet}
