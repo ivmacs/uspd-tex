@@ -109,13 +109,13 @@
                                      {12pt}%
                                      {12pt}%
                                     {\uspd@sect@alignleft\uspd@subsect@style}}
-% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\parindent}%
-%                                      {0pt}%
-%                                      {0pt}%
-%                                      {\uspd@sect@alignleft\uspd@subsubsect@style}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\parindent}%
+                                     {12pt}%
+                                     {12pt}%
+                                     {\uspd@sect@alignleft\uspd@subsubsect@style}}
 
-% \renewcommand{\thesection}{\arabic{section}}
-% \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+%\renewcommand{\thesection}{\arabic{section}}
+%\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 % \renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
 
 \righthyphenmin=2
@@ -361,7 +361,7 @@
 \parbox[c]{\columnTen-2\tabcolsep-1.5\arrayrulewidth}{%
   \vspace{-\baselineskip}\centering\smallFont{Дата}}\\\hline
 \endhead
-\hline
+%\hline
 \endfoot}{\end{longtable}}
 
 \renewcommand\tableofcontents{%
@@ -371,7 +371,7 @@
     \@mkboth{%
       \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
   \endgroup
-  \@starttoc{toc}}
+  \@starttoc{toc}\newpage}
 
 \newcommand{\uspd@annotation}{
   \begingroup
