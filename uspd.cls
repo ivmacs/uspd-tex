@@ -46,9 +46,8 @@
 \setlength{\unitlength}{1mm}
 %\linespread{1.25}
 \onehalfspacing
-
 \setlength{\parindent}{12.5mm}
-
+\setlength{\headsep}{12.5mm}
 \newcommand{\No}{\textnumero{}}
 
 \def\ps@uspdluheadings{

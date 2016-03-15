@@ -1,15 +1,14 @@
-\documentclass[a4paper,14pt,noinfopart]{uspd}
-\usepackage{fontenc}
+\documentclass[a4paper,14pt]{uspd}
+\usepackage{ifxetex}
 
-\newcommand{\rmfont}{CMU Serif}
-\defaultfontfeatures{Mapping=tex-text, Scale=MatchLowercase} % to support long dashes
-\newfontfamily{\cyrillicfont}{\rmfont}
-\setmainfont{\rmfont}
-\setromanfont{\rmfont}
+\ifxetex
+  \defaultfontfeatures{Mapping=tex-text, Scale=MatchLowercase} % to support long dashes
+  \newcommand{\rmfont}{CMU Serif}
+  \newfontfamily{\cyrillicfont}{\rmfont}
+  \setmainfont{\rmfont}
 
-\usepackage{polyglossia}
-\setdefaultlanguage{russian}
-\PolyglossiaSetup{russian}{indentfirst=true}
+  \PolyglossiaSetup{russian}{indentfirst=true}
+\fi
 
 \uspdset[
   designation = 04832915.10016--01~32~01,
