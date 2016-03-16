@@ -77,16 +77,16 @@
 \setcaptionmargin{\parindent}
 \setcounter{tocdepth}{2}
 
-% \renewcommand{\point}{\par\refstepcounter{subsubsection}\thesubsubsection\quad}
-% 
-% \newcounter{niidarSubpoint}[subsubsection]
-% \renewcommand{\subpoint}{\par\refstepcounter{niidarSubpoint}\thesubpoint\quad}
-% 
-% \renewcommand{\thepoint}{\thesubsection.\arabic{subsubsection}}
-% \renewcommand{\thesubpoint}{\thepoint.\arabic{niidarSubpoint}}
-% 
-% \newcommand{\overpoint}{{\par\refstepcounter{subsection}\thesubsection\quad}}
-% \newcommand{\overoverpoint}{{\par\refstepcounter{section}\thesection\quad}}
+\newcommand{\point}{\par\refstepcounter{subsubsection}\thesubsubsection\quad}
+
+\newcounter{niidarSubpoint}[subsubsection]
+\newcommand{\subpoint}{\par\refstepcounter{niidarSubpoint}\thesubpoint\quad}
+
+\newcommand{\thepoint}{\thesubsection.\arabic{subsubsection}}
+\newcommand{\thesubpoint}{\thepoint.\arabic{niidarSubpoint}}
+
+\newcommand{\overpoint}{{\par\refstepcounter{subsection}\thesubsection\quad}}
+\newcommand{\overoverpoint}{{\par\refstepcounter{section}\thesection\quad}}
 
 \newcommand{\uspd@sect@alignleft}{%
   \let\\\@centercr\@rightskip\@flushglue \rightskip\@rightskip%
