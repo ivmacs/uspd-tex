@@ -109,8 +109,8 @@
                                      {12pt}%
                                     {\uspd@sect@alignleft\uspd@subsect@style}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\parindent}%
-                                     {12pt}%
-                                     {12pt}%
+                                     {1pt}%
+                                     {1pt}%
                                      {\uspd@sect@alignleft\uspd@subsubsect@style}}
 
 %\renewcommand{\thesection}{\arabic{section}}
@@ -123,6 +123,9 @@
 \setlength{\topsep}{0pt}
 \renewcommand{\itemize}{\asparaitem}
 \renewcommand{\enumerate}{\asparaenum}
+
+\renewcommand*\descriptionlabel[1]{\hspace\labelsep\normalfont #1}
+\let\description\compactdesc
 
 \renewcommand{\cftsecfont}{\normalfont}
 \renewcommand{\cftsecpagefont}{\normalfont}
