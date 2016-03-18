@@ -130,9 +130,10 @@
 \newlength{\onenumwidth}
 \settowidth{\onenumwidth}{.1}
 \addtolength{\cftsecnumwidth}{\onenumwidth}
-\addtolength{\cftsubsecnumwidth}{\onenumwidth}
-
-%\renewcommand{\cftsecnumwidth}{}
+\newlength{\onedotwidth}
+\settowidth{\onedotwidth}{.}
+\addtolength{\cftsubsecnumwidth}{\onedotwidth}
+%\renewcommand{\cftsecnumwidth}{\onenumwidth}
 \renewcommand{\cftdotsep}{\cftnodots}
 \renewcommand{\cftbeforesecskip}{\cftbeforesubsecskip}
 % \renewcommand{\cfttoctitlefont}{\hfil\bfseries\MakeTextUppercase}
