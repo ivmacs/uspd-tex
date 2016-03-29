@@ -42,13 +42,27 @@
 \RequirePackage{array}
 \RequirePackage{longtable}
 \RequirePackage{paralist}
+\RequirePackage[titletoc,title]{appendix}
 
 \setlength{\unitlength}{1mm}
-%\linespread{1.25}
-\onehalfspacing
+\linespread{1.25} %\onehalfspacing
 \setlength{\parindent}{12.5mm}
 \setlength{\headsep}{12.5mm}
+
 \newcommand{\No}{\textnumero{}}
+
+\addto\captionsrussian{%
+  \renewcommand{\figurename}{Рисунок}
+}
+
+\DeclareCaptionLabelSeparator{dash}{ -- }
+\captionsetup[table]{%
+labelsep=dash,justification=raggedright,singlelinecheck=false,%
+aboveskip=3mm,belowskip=0mm}
+\captionsetup[figure]{%
+labelsep=dash,justification=centering,singlelinecheck=false,%
+aboveskip=3mm,belowskip=3mm}
+
 
 \def\ps@uspdluheadings{
   \def\@oddfoot{\\{}}%Литера <<О>>}} % ГОСТ 2.103-68
