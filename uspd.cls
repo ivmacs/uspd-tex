@@ -444,4 +444,4 @@ aboveskip=3mm,belowskip=3mm}
   }
 
 \AtBeginDocument{\uspd@content}
-\AtEndDocument{\uspd@changesheet}
+\AtEndDocument{\uspd@changesheet\label{enddoc}}
