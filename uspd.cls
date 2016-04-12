@@ -42,7 +42,6 @@
 \RequirePackage{array}
 \RequirePackage{longtable}
 \RequirePackage{paralist}
-\RequirePackage[titletoc,title]{appendix}
 
 \setlength{\unitlength}{1mm}
 \linespread{1.25} %\onehalfspacing
@@ -54,6 +53,38 @@
 \addto\captionsrussian{%
   \renewcommand{\figurename}{Рисунок}
 }
+
+\newcounter{appendix}
+\renewcommand{\theappendix}{\arabic{appendix}}
+\newlength{\appskip}
+\setlength{\appskip}{12pt}
+
+\newcommand{\uspdapp}[1]{%
+  \clearpage%
+  \refstepcounter{appendix}%
+  \setcounter{section}{0}%
+% \renewcommand\thesection{\theappendix.\arabic{section}}
+  \setcounter{equation}{0}%
+  \renewcommand{\theequation}{\theappendix.\arabic{equation}}%
+  \setcounter{figure}{0}%
+  \renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
+  \setcounter{table}{0}%
+  \renewcommand{\thetable}{\theappendix.\arabic{table}}%
+  \addcontentsline{toc}{section}{\appendixname\ \theappendix\ #1}%
+  \begin{list}{}{%
+    \setlength{\itemindent}{0mm}%
+    \setlength{\labelwidth}{0mm}%
+    \setlength{\labelsep}{0mm}%
+    \setlength{\leftmargin}{0mm}%
+    \setlength{\topsep}{0mm}%
+    \setlength{\parskip}{0mm}%
+    \setlength{\partopsep}{0mm}%
+    \setlength{\itemsep}{12pt}%
+    \setlength{\parsep}{0mm}}
+    \item\raggedleft\MakeUppercase\appendixname\ \theappendix
+    \item\centering\MakeTextUppercase{ #1}
+  \end{list}%
+  \par\nobreak\addvspace{\appskip}}
 
 \DeclareCaptionLabelSeparator{dash}{ -- }
 \captionsetup[table]{%
@@ -137,9 +168,9 @@ aboveskip=3mm,belowskip=3mm}
 \setlength{\topsep}{0pt}
 \renewcommand{\itemize}{\asparaitem}
 \renewcommand{\enumerate}{\asparaenum}
+\renewcommand{\description}{\asparadesc}
 
-\renewcommand*\descriptionlabel[1]{\hspace\labelsep\normalfont #1}
-\let\description\compactdesc
+\renewcommand\paradescriptionlabel[1]{\normalfont #1}
 
 \renewcommand{\cftsecfont}{\normalfont}
 \renewcommand{\cftsecpagefont}{\normalfont}
