@@ -48,11 +48,23 @@
 \setlength{\parindent}{12.5mm}
 \setlength{\headsep}{12.5mm}
 
+\newlength{\defindent}
+\setlength{\defindent}{\parindent}
+
 \newcommand{\No}{\textnumero{}}
 
 \addto\captionsrussian{%
   \renewcommand{\figurename}{Рисунок}
 }
+
+% \makeatletter
+% \renewcommand{\appendix}{\par%
+%   \setcounter{section}{0}%
+%   \setcounter{subsection}{0}%
+%   \def\sectionname{\appendixname}%
+%   \addcontentsline{toc}{section}{\appendixname}%
+%   \gdef\thesection{\appendixname\hspace{12pt}\@arabic\c@section}%
+% }
 
 \newcounter{appendix}
 \renewcommand{\theappendix}{\arabic{appendix}}
@@ -71,20 +83,14 @@
   \setcounter{table}{0}%
   \renewcommand{\thetable}{\theappendix.\arabic{table}}%
   \addcontentsline{toc}{section}{\appendixname\ \theappendix\ #1}%
-  \begin{list}{}{%
-    \setlength{\itemindent}{0mm}%
-    \setlength{\labelwidth}{0mm}%
-    \setlength{\labelsep}{0mm}%
-    \setlength{\leftmargin}{0mm}%
-    \setlength{\topsep}{0mm}%
-    \setlength{\parskip}{0mm}%
-    \setlength{\partopsep}{0mm}%
-    \setlength{\itemsep}{12pt}%
-    \setlength{\parsep}{0mm}}
-    \item\raggedleft\MakeUppercase\appendixname\ \theappendix
-    \item\centering\MakeTextUppercase{ #1}
-  \end{list}%
+  \begin{flushright}\MakeUppercase\appendixname\ \theappendix\\ \end{flushright}
+  \begin{center}\MakeTextUppercase{ #1} \end{center}
   \par\nobreak\addvspace{\appskip}}
+
+\newcommand{\toclesssec}[1]{
+  \stepcounter{section}
+  \section*{\arabic{section}\quad#1}
+}
 
 \DeclareCaptionLabelSeparator{dash}{ -- }
 \captionsetup[table]{%
@@ -178,14 +184,9 @@ aboveskip=3mm,belowskip=3mm}
 \newlength{\onenumwidth}
 \settowidth{\onenumwidth}{.1}
 \addtolength{\cftsecnumwidth}{\onenumwidth}
-\newlength{\onedotwidth}
-\settowidth{\onedotwidth}{.}
-\addtolength{\cftsubsecnumwidth}{\onedotwidth}
-%\renewcommand{\cftsecnumwidth}{\onenumwidth}
+% \renewcommand{\cftsecnumwidth}{\onenumwidth}
 \renewcommand{\cftdotsep}{\cftnodots}
 \renewcommand{\cftbeforesecskip}{\cftbeforesubsecskip}
-% \renewcommand{\cfttoctitlefont}{\hfil\bfseries\MakeTextUppercase}
-% \renewcommand{\cftaftertoctitle}{\hfill}
 
 % font definitions
 \newcommand{\fontShape}{\normalfont}
