@@ -213,8 +213,8 @@ aboveskip=3mm,belowskip=3mm}
 \newpage
 }}
 
-\newcommand\signfield[1]{\underline{\phantom{ЖЖЖЖЖ}}~{#1}}
-\newcommand\datefield{<<\underline{\phantom{Ж}}>>~\underline{\phantom{ЖЖЖЖЖ}}~{\number\year}~г.}
+\newcommand\signfield[1]{{\phantom{ЖЖЖЖЖ}}~{#1}}
+\newcommand\datefield{<<\underline{\phantom{Ж}}>>~\underline{\phantom{ЖЖЖЖ}}~{\number\year}~г.}
 \newcommand\signeefield[3]{#1\newline\signfield{#2}\newline\datefield\newline\newline}
 \newcommand\pagesfield[1]{\ifthenelse{\pageref{#1} > 1}{Листов \pageref{#1}}{}}
 \renewcommand{\labelitemi}{--}
@@ -229,7 +229,7 @@ aboveskip=3mm,belowskip=3mm}
 %{ОАО <<НПК <<НИИДАР>>}
 
 % field 2, names and signatures
-\begin{tabular}{p{70mm}cp{70mm}}
+\begin{tabular}{p{70mm}cp{85mm}}
 \multicolumn{1}{c}{
   \setbox0=\hbox{\agreeingsT{}\unskip}\ifdim\wd0=0pt
     % empty
@@ -237,7 +237,7 @@ aboveskip=3mm,belowskip=3mm}
     СОГЛАСОВАНО%
   \fi
 } & & \multicolumn{1}{c}{УТВЕРЖДАЮ} \\
-& & \\
+%& & \\
 \agreeingsT{} & & \approversT{} \\
 \end{tabular}
 
@@ -267,7 +267,7 @@ aboveskip=3mm,belowskip=3mm}
 \vskip 20mm
 
 % field 6,
-\begin{tabular}{p{70mm}cp{70mm}}
+\begin{tabular}{p{80mm}cp{80mm}}
 \agreeingsB{} & & \approversB{} \\
 \end{tabular}
 
@@ -282,7 +282,7 @@ aboveskip=3mm,belowskip=3mm}
 \newcommand\TP[1]{{\markboth{{#1}}{{#1}}\setcounter{page}{1}\stamp{
 \thispagestyle{uspdluheadings}
 
-{УТВЕРЖДЕНО}
+{УТВЕРЖДЕН}
 
 {{#1}--ЛУ}
 
