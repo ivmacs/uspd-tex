@@ -127,14 +127,15 @@ aboveskip=3mm,belowskip=3mm}
 
 \setcaptionmargin{\parindent}
 \setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{5}
 
 \newcommand{\point}{\par\refstepcounter{subsubsection}\thesubsubsection\quad}
-
-\newcounter{niidarSubpoint}[subsubsection]
-\newcommand{\subpoint}{\par\refstepcounter{niidarSubpoint}\thesubpoint\quad}
+\newcommand{\subpoint}{\par\refstepcounter{paragraph}\thesubpoint\quad}
+\newcommand{\subsubpoint}{\par\refstepcounter{subparagraph}\thesubsubpoint\quad}
 
 \newcommand{\thepoint}{\thesubsection.\arabic{subsubsection}}
-\newcommand{\thesubpoint}{\thepoint.\arabic{niidarSubpoint}}
+\newcommand{\thesubpoint}{\thepoint.\arabic{paragraph}}
+\newcommand{\thesubsubpoint}{\thesubpoint.\arabic{subparagraph}}
 
 \newcommand{\overpoint}{{\par\refstepcounter{subsection}\thesubsection\quad}}
 \newcommand{\overoverpoint}{{\par\refstepcounter{section}\thesection\quad}}
