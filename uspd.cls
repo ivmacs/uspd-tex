@@ -1,4 +1,5 @@
-%% Copyright (c) Kirill V. Zaborsky, 2013
+%% Copyright (c) Igor V. Merzlyakov, 2016
+%%               Kirill V. Zaborsky, 2013
 %%               Alexander V. Inyukhin, 2004.
 %%
 %% This system is distributed in the hope that it will be useful,
@@ -25,6 +26,10 @@
 % Info part
 \newif\ifuspd@withinfo\uspd@withinfotrue
 \DeclareOption{noinfopart}{\uspd@withinfofalse}
+
+% Primary usage inscription
+\newif\ifuspd@printusage\uspd@printusagefalse
+\DeclareOption{printusage}{\uspd@printusagetrue}
 
 \ProcessOptions\relax
 \LoadClass[a4paper,onecolumn]{extarticle}
@@ -129,9 +134,9 @@ aboveskip=3mm,belowskip=3mm}
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{5}
 
-\newcommand{\point}{\par\refstepcounter{subsubsection}\thesubsubsection\quad}
-\newcommand{\subpoint}{\par\refstepcounter{paragraph}\thesubpoint\quad}
-\newcommand{\subsubpoint}{\par\refstepcounter{subparagraph}\thesubsubpoint\quad}
+\newcommand{\point}{\par\refstepcounter{subsubsection}\thesubsubsection.\quad}   % пункт
+\newcommand{\subpoint}{\par\refstepcounter{paragraph}\thesubpoint.\quad}         % подпункт
+\newcommand{\subsubpoint}{\par\refstepcounter{subparagraph}\thesubsubpoint.\quad}% подподпункт
 
 \newcommand{\thepoint}{\thesubsection.\arabic{subsubsection}}
 \newcommand{\thesubpoint}{\thepoint.\arabic{paragraph}}
@@ -183,9 +188,14 @@ aboveskip=3mm,belowskip=3mm}
 \renewcommand{\cftsecpagefont}{\normalfont}
 \renewcommand{\cftsubsecindent}{\cftsecindent}
 \newlength{\onenumwidth}
-\settowidth{\onenumwidth}{.1}
+\settowidth{\onenumwidth}{1.1}
 \addtolength{\cftsecnumwidth}{\onenumwidth}
-% \renewcommand{\cftsecnumwidth}{\onenumwidth}
+\newlength{\numwidth}
+\settowidth{\numwidth}{1}
+\addtolength{\cftsubsecnumwidth}{\numwidth}
+
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{\cftsecaftersnum}
 \renewcommand{\cftdotsep}{\cftnodots}
 \renewcommand{\cftbeforesecskip}{\cftbeforesubsecskip}
 
@@ -195,7 +205,7 @@ aboveskip=3mm,belowskip=3mm}
 \newcommand{\smallFont}{%
   \smallFontSize\selectfont\fontShape}
 
-\newcommand\stamp[1]{{
+\newcommand\stamp[2]{{
 \newpage
 \noindent\begin{picture}(0,0)(0,0)
 \put(-12,-252){\framebox(12,145)}
@@ -204,13 +214,24 @@ aboveskip=3mm,belowskip=3mm}
 \put(-12,-167){\line(1,0){12}}
 \put(-12,-192){\line(1,0){12}}
 \put(-12,-227){\line(1,0){12}}
-\put(-11,-251){\begin{sideways}\parbox[t]{25mm}{\smallFont Инв. {\No}подп.}\end{sideways}}
+\put(-11,-251){\begin{sideways}\parbox[t]{25mm}{\smallFont Инв. \No{} подп.}\end{sideways}}
 \put(-11,-226){\begin{sideways}\parbox[t]{35mm}{\smallFont Подп. и дата}\end{sideways}}
-\put(-11,-191){\begin{sideways}\parbox[t]{25mm}{\smallFont Взам инв. {\No}}\end{sideways}}
-\put(-11,-166){\begin{sideways}\parbox[t]{25mm}{\smallFont Инв. {\No} дубл.}\end{sideways}}
+\put(-11,-191){\begin{sideways}\parbox[t]{25mm}{\smallFont Взам инв. \No}\end{sideways}}
+\put(-11,-166){\begin{sideways}\parbox[t]{25mm}{\smallFont Инв. \No{} дубл.}\end{sideways}}
 \put(-11,-141){\begin{sideways}\parbox[t]{35mm}{\smallFont Подп. и дата}\end{sideways}}
+\ifuspd@printusage
+  \setbox0=\hbox{#1\unskip}
+  \ifdim\wd0=0pt
+    % empty
+  \else
+    \put(-12,-61){\framebox(12,45)}
+    \put(-7,-61){\line(0,1){45}}
+    \put(-11,-49){\begin{sideways}\parbox[t]{45mm}{\smallFont Перв. примен.}\end{sideways}}%
+    \put(-5,-49){\begin{sideways}\parbox[t]{45mm}{\smallFont #1}\end{sideways}}%
+  \fi
+\fi
 \end{picture}
-#1
+#2
 \newpage
 }}
 
@@ -220,7 +241,7 @@ aboveskip=3mm,belowskip=3mm}
 \newcommand\pagesfield[1]{\ifthenelse{\pageref{#1} > 1}{Листов \pageref{#1}}{}}
 \renewcommand{\labelitemi}{--}
 \newcommand\LU[1]{\markboth{{#1}--ЛУ}{{#1}--ЛУ}\setcounter{page}{1}
-\thispagestyle{uspdnormheadings}\stamp{
+\thispagestyle{uspdnormheadings}\stamp{}{
 % field 0, label
 %{\noindent\hfill Совершенно секретно}
 
@@ -280,7 +301,7 @@ aboveskip=3mm,belowskip=3mm}
 \thispagestyle{uspdluheadings}
 }
 
-\newcommand\TP[1]{{\markboth{{#1}}{{#1}}\setcounter{page}{1}\stamp{
+\newcommand\TP[1]{{\markboth{{#1}}{{#1}}\setcounter{page}{1}\stamp{\primaryusage}{
 \thispagestyle{uspdluheadings}
 
 {УТВЕРЖДЕН}
@@ -334,12 +355,13 @@ aboveskip=3mm,belowskip=3mm}
   /uspd/.cd,
   designation/.store in =\designation,
   abstract/.store in =\abstract,
+  primaryusage/.store in =\primaryusage,
   agreeingsT/.store in = \agreeingsT,
   agreeingsB/.store in = \agreeingsB,
   approversT/.store in = \approversT,
   approversB/.store in = \approversB,
   agreeingsT,agreeingsB,
-  approversT,approversB
+  approversT,approversB,
 }
 
 \newcommand{\uspdset}[1][]{
@@ -477,4 +499,7 @@ aboveskip=3mm,belowskip=3mm}
   }
 
 \AtBeginDocument{\uspd@content}
-\AtEndDocument{\uspd@changesheet\label{enddoc}}
+\AtEndDocument{
+\ifnum \thepage > 2
+  \uspd@changesheet
+\fi\label{enddoc}}
