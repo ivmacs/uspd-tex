@@ -82,15 +82,21 @@
   \setcounter{section}{0}%
 % \renewcommand\thesection{\theappendix.\arabic{section}}
   \setcounter{equation}{0}%
-  \renewcommand{\theequation}{\theappendix.\arabic{equation}}%
+  %\renewcommand{\theequation}{\theappendix.\arabic{equation}}%
   \setcounter{figure}{0}%
-  \renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
+  %\renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
   \setcounter{table}{0}%
-  \renewcommand{\thetable}{\theappendix.\arabic{table}}%
+  %\renewcommand{\thetable}{\theappendix.\arabic{table}}%
   \ifnum #1>1
+  \renewcommand{\theequation}{\theappendix.\arabic{equation}}%
+  \renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
+  \renewcommand{\thetable}{\theappendix.\arabic{table}}%
   \addcontentsline{toc}{section}{\appendixname\ \theappendix.\ #2}%
   \begin{flushright}\MakeUppercase\appendixname\ \theappendix\\ \end{flushright}%
   \else
+  \renewcommand{\theequation}{\arabic{equation}}%
+  \renewcommand{\thefigure}{\arabic{figure}}%
+  \renewcommand{\thetable}{\arabic{table}}%
   \addcontentsline{toc}{section}{\appendixname.\ #2}%
   \begin{flushright}\MakeUppercase\appendixname\ \end{flushright}%
   \fi
