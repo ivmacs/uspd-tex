@@ -76,7 +76,7 @@
 \newlength{\appskip}
 \setlength{\appskip}{12pt}
 
-\newcommand{\uspdapp}[1]{%
+\newcommand{\uspdapp}[2][2]{%
   \clearpage%
   \refstepcounter{appendix}%
   \setcounter{section}{0}%
@@ -87,14 +87,19 @@
   \renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
   \setcounter{table}{0}%
   \renewcommand{\thetable}{\theappendix.\arabic{table}}%
-  \addcontentsline{toc}{section}{\appendixname\ \theappendix\ #1}%
-  \begin{flushright}\MakeUppercase\appendixname\ \theappendix\\ \end{flushright}
-  \begin{center}\MakeTextUppercase{ #1} \end{center}
+  \ifnum #1>1
+  \addcontentsline{toc}{section}{\appendixname\ \theappendix.\ #2}%
+  \begin{flushright}\MakeUppercase\appendixname\ \theappendix\\ \end{flushright}%
+  \else
+  \addcontentsline{toc}{section}{\appendixname.\ #2}%
+  \begin{flushright}\MakeUppercase\appendixname\ \end{flushright}%
+  \fi
+  \begin{center}\MakeTextUppercase{ #2} \end{center}
   \par\nobreak\addvspace{\appskip}}
 
 \newcommand{\toclesssec}[1]{
   \stepcounter{section}
-  \section*{\arabic{section}\quad#1}
+  \section*{\arabic{section}.\quad#1}
 }
 
 \DeclareCaptionLabelSeparator{dash}{ -- }
