@@ -47,6 +47,7 @@
 \RequirePackage{array}
 \RequirePackage{longtable}
 \RequirePackage{paralist}
+\RequirePackage{suffix}
 
 \setlength{\unitlength}{1mm}
 \linespread{1.25} %\onehalfspacing
@@ -71,42 +72,50 @@
 %   \gdef\thesection{\appendixname\hspace{12pt}\@arabic\c@section}%
 % }
 
-\newcounter{appendix}
-\renewcommand{\theappendix}{\arabic{appendix}}
-\newlength{\appskip}
-\setlength{\appskip}{12pt}
-
-\newcommand{\uspdapp}[2][2]{%
-  \clearpage%
-  \refstepcounter{appendix}%
-  \setcounter{section}{0}%
-% \renewcommand\thesection{\theappendix.\arabic{section}}
-  \setcounter{equation}{0}%
-  %\renewcommand{\theequation}{\theappendix.\arabic{equation}}%
-  \setcounter{figure}{0}%
-  %\renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
-  \setcounter{table}{0}%
-  %\renewcommand{\thetable}{\theappendix.\arabic{table}}%
-  \ifnum #1>1
-  \renewcommand{\theequation}{\theappendix.\arabic{equation}}%
-  \renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
-  \renewcommand{\thetable}{\theappendix.\arabic{table}}%
-  \addcontentsline{toc}{section}{\appendixname\ \theappendix.\ #2}%
-  \begin{flushright}\MakeUppercase\appendixname\ \theappendix\\ \end{flushright}%
-  \else
-  \renewcommand{\theequation}{\arabic{equation}}%
-  \renewcommand{\thefigure}{\arabic{figure}}%
-  \renewcommand{\thetable}{\arabic{table}}%
-  \addcontentsline{toc}{section}{\appendixname.\ #2}%
-  \begin{flushright}\MakeUppercase\appendixname\ \end{flushright}%
-  \fi
-  \begin{center}\MakeTextUppercase{ #2} \end{center}
-  \par\nobreak\addvspace{\appskip}}
-
 \newcommand{\toclesssec}[1]{
   \stepcounter{section}
   \section*{\arabic{section}.\quad#1}
 }
+\newcommand\hiddensec[1]{\toclesssec{#1}}% alias
+\newcounter{appendix}
+%\renewcommand{\theappendix}{\arabic{appendix}}
+\newlength{\appskip}
+\setlength{\appskip}{12pt}
+
+\newcommand\uspdapp[1]{%
+  \clearpage%
+  \refstepcounter{appendix}%
+  \setcounter{section}{0}%
+  \setcounter{equation}{0}%
+  \setcounter{figure}{0}%
+  \setcounter{table}{0}%
+
+  \renewcommand{\theappendix}{\arabic{appendix}}
+
+  \renewcommand{\theequation}{\theappendix.\arabic{equation}}%
+  \renewcommand{\thefigure}{\theappendix.\arabic{figure}}%
+  \renewcommand{\thetable}{\theappendix.\arabic{table}}%
+  \addcontentsline{toc}{section}{\appendixname\ \theappendix.\ #1}%
+  \begin{flushright}\MakeUppercase\appendixname\ \theappendix\\ \end{flushright}%
+  \begin{center}\MakeTextUppercase{ #1} \end{center}
+  \par\nobreak\addvspace{\appskip}}
+
+\WithSuffix\newcommand\uspdapp*[1]{%
+  \clearpage%
+  \renewcommand{\theappendix}{\unskip}% for references
+  \refstepcounter{appendix}%
+  \setcounter{section}{0}%
+  \setcounter{equation}{0}%
+  \setcounter{figure}{0}%
+  \setcounter{table}{0}%
+
+  \renewcommand{\theequation}{\arabic{equation}}%
+  \renewcommand{\thefigure}{\arabic{figure}}%
+  \renewcommand{\thetable}{\arabic{table}}%
+  \addcontentsline{toc}{section}{\appendixname.\ #1}%
+  \begin{flushright}\MakeUppercase\appendixname\\\end{flushright}%
+  \begin{center}\MakeTextUppercase{ #1} \end{center}
+  \par\nobreak\addvspace{\appskip}}
 
 \DeclareCaptionLabelSeparator{dash}{ -- }
 \captionsetup[table]{%
